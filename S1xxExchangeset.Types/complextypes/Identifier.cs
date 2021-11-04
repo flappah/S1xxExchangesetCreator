@@ -35,9 +35,39 @@ namespace S1xxExchangeset.Types.complextypes
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        ///     Write XML to XmlWriter 
+        /// </summary>
+        /// <param name="writer">writer to write XML to</param>
         public override void WriteXml(XmlWriter writer)
         {
             writer.WriteStartElement(NamespacePrefix, "identifier", Namespace);
+
+            //public string Ident { get; set; }
+            if (!String.IsNullOrEmpty(Ident))
+            {
+                writer.WriteStartElement(NamespacePrefix, "identifier", Namespace);
+                writer.WriteString(Ident);
+                writer.WriteEndElement();
+            }
+
+            //public string EditionNumber { get; set; }
+            if (!String.IsNullOrEmpty(EditionNumber))
+            {
+                writer.WriteStartElement(NamespacePrefix, "editionNumber", Namespace);
+                writer.WriteString(EditionNumber);
+                writer.WriteEndElement();
+            }
+
+            //public string Date { get; set; }
+            if (!String.IsNullOrEmpty(Date))
+            {
+                writer.WriteStartElement(NamespacePrefix, "date", Namespace);
+                writer.WriteString(Date);
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
         }
     }
 }

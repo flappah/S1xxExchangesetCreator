@@ -26,9 +26,23 @@ namespace S1xxExchangeset.Types.complextypes
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        ///     Write XML to XmlWriter 
+        /// </summary>
+        /// <param name="writer">writer to write XML to</param>
         public override void WriteXml(XmlWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteStartElement(NamespacePrefix, "identifier", Namespace);
+
+            //public string Organization { get; set; }
+            if (!String.IsNullOrEmpty(Organization))
+            {
+                writer.WriteStartElement(NamespacePrefix, "organization", Namespace);
+                writer.WriteString(Organization);
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
         }
     }
 }

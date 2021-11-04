@@ -11,6 +11,17 @@ namespace S1xxExchangeset.Types.complextypes
     {
         public IMDUsage MDUsage { get; set; }
 
+        /// <summary>
+        ///     Returns true if the instance has no data
+        /// </summary>
+        public override bool IsEmpty
+        {
+            get
+            {
+                return MDUsage == null || MDUsage.IsEmpty;
+            }
+        }
+
         public override XmlSchema GetSchema()
         {
             throw new NotImplementedException();
@@ -21,9 +32,22 @@ namespace S1xxExchangeset.Types.complextypes
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        ///     Write XML to XmlWriter 
+        /// </summary>
+        /// <param name="writer">writer to write XML to</param>
         public override void WriteXml(XmlWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteStartElement(NamespacePrefix, "specificUsage", Namespace);
+
+            if (MDUsage != null && MDUsage.IsEmpty == false)
+            {
+                MDUsage.NamespacePrefix = "gmd";
+                MDUsage.Namespace = @"http://www.isotc211.org/2005/gmd";
+                MDUsage.WriteXml(writer);
+            }
+
+            writer.WriteEndElement();
         }
     }
 }

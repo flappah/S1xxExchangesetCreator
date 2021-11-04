@@ -12,6 +12,17 @@ namespace S1xxExchangeset.Types.complextypes
         public string SpecificUsage { get; set; }
         public string UserContactInfo { get; set; }
 
+        /// <summary>
+        ///     Returns true if the instance has no data
+        /// </summary>
+        public override bool IsEmpty
+        {
+            get
+            {
+                return String.IsNullOrEmpty(SpecificUsage) && String.IsNullOrEmpty(UserContactInfo);
+            }
+        }
+
         public override XmlSchema GetSchema()
         {
             throw new NotImplementedException();
@@ -22,9 +33,38 @@ namespace S1xxExchangeset.Types.complextypes
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        ///     Write XML to XmlWriter 
+        /// </summary>
+        /// <param name="writer">writer to write XML to</param>
         public override void WriteXml(XmlWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteStartElement(NamespacePrefix, "MD_Usage", Namespace);
+
+            //public string SpecificUsage { get; set; }
+            if (!String.IsNullOrEmpty(SpecificUsage))
+            {
+                writer.WriteStartElement(NamespacePrefix, "specificUsage", Namespace);
+                writer.WriteStartElement("gco", "characterString", @"http://www.isotc211.org/2005/gco");
+                writer.WriteString(SpecificUsage);
+                writer.WriteEndElement();
+                writer.WriteEndElement();
+            }
+
+            //public string UserContactInfo { get; set; }
+            writer.WriteStartElement(NamespacePrefix, "userContactInfo", Namespace);
+            if (String.IsNullOrEmpty(UserContactInfo))
+            {
+                writer.WriteAttributeString("gco", "nilReason", @"http://www.isotc211.org/2005/gco", "unknown");
+            }
+            else
+            {
+                writer.WriteString(UserContactInfo);
+            }
+
+            writer.WriteEndElement();
+
+            writer.WriteEndElement();
         }
     }
 }

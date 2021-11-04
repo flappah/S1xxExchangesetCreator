@@ -1,7 +1,5 @@
 ﻿using S1xxExchangeset.Types.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 
@@ -11,6 +9,18 @@ namespace S1xxExchangeset.Types.complextypes
     {
         public string FileName { get; set; }
         public string Label { get; set; }
+
+        /// <summary>
+        ///     Returns true if the instance has no data
+        /// </summary>
+        public override bool IsEmpty
+        {
+            get
+            {
+                return String.IsNullOrEmpty(FileName) &&
+                    String.IsNullOrEmpty(Label);
+            }
+        }
 
         public override XmlSchema GetSchema()
         {
@@ -22,9 +32,23 @@ namespace S1xxExchangeset.Types.complextypes
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        ///     Write XML to XmlWriter 
+        /// </summary>
+        /// <param name="writer">writer to write XML to</param>
         public override void WriteXml(XmlWriter writer)
         {
-            throw new NotImplementedException();
+            writer.WriteStartElement(NamespacePrefix, "S100_19115DatasetMetadata", Namespace);
+
+            if (!String.IsNullOrEmpty(FileName))
+            {
+                writer.WriteStartElement("gmx", "FileName", @"http://www.isotc211.org/2005/gmx");
+                writer.WriteAttributeString("src", FileName);
+                writer.WriteString(Label);
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
         }
     }
 }
