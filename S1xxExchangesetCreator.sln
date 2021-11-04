@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S1xxExchangesetCreator", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S1xxExchangeset.Types", "S1xxExchangeset.Types\S1xxExchangeset.Types.csproj", "{B9E56209-2D7B-4F24-891E-9AFCBE3368D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S1xxExchangeset.Model", "S1xxExchangeset.Model\S1xxExchangeset.Model.csproj", "{DD53F10A-A3F3-4072-9996-3CE677C4C6BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B9E56209-2D7B-4F24-891E-9AFCBE3368D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9E56209-2D7B-4F24-891E-9AFCBE3368D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9E56209-2D7B-4F24-891E-9AFCBE3368D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD53F10A-A3F3-4072-9996-3CE677C4C6BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD53F10A-A3F3-4072-9996-3CE677C4C6BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD53F10A-A3F3-4072-9996-3CE677C4C6BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD53F10A-A3F3-4072-9996-3CE677C4C6BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
