@@ -4,8 +4,7 @@ using System.Text;
 
 namespace S1xxExchangeset.Model
 {
-    public abstract class ExchangesetModelBase
+    public class CatalogueWriter
     {
-        public virtual string ExchangeSetCode { get; }
     }
 }

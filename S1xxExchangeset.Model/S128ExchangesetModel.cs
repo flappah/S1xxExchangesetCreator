@@ -6,5 +6,6 @@ namespace S1xxExchangeset.Model
 {
     public class S128ExchangesetModel : ExchangesetModelBase
     {
+        public override string ExchangeSetCode { get { return "MXX"; } }
     }
 }

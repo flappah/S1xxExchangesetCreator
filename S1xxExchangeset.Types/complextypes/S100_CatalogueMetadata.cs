@@ -5,6 +5,7 @@ using System.Xml.Schema;
 
 namespace S1xxExchangeset.Types.complextypes
 {
+    [Serializable]
     public class S100_CatalogueMetadata : ComplexTypeBase, IS100_CatalogueMetadata
     {
         public string FileName { get; set; }
