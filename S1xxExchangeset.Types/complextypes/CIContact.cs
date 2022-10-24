@@ -37,6 +37,7 @@ namespace S1xxExchangeset.Types.complextypes
         public override void WriteXml(XmlWriter writer)
         {
             writer.WriteStartElement(NamespacePrefix, "CI_Contact", Namespace);
+            writer.WriteStartElement(NamespacePrefix, "address", Namespace);
 
             if (Address != null && Address.IsEmpty == false)
             {
@@ -45,6 +46,7 @@ namespace S1xxExchangeset.Types.complextypes
                 Address.WriteXml(writer);
             }
 
+            writer.WriteEndElement();
             writer.WriteEndElement();
         }
     }

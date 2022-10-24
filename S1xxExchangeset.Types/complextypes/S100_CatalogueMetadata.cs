@@ -8,14 +8,16 @@ namespace S1xxExchangeset.Types.complextypes
     [Serializable]
     public class S100_CatalogueMetadata : ComplexTypeBase, IS100_CatalogueMetadata
     {
-        public string FileName { get; set; }
-        public string FileLocation { get; set; }
-        public string Scope { get; set; }
-        public string VersionNumber { get; set; }
-        public string IssueDate { get; set; }
-        public IProductSpecification ProductSpecification { get; set; }
+        public string[] FileName { get; set; }
+        public string[] FileLocation { get; set; }
+        public string[] Scope { get; set; }
+        public string[] VersionNumber { get; set; }
+        public string[] IssueDate { get; set; }
+        public IProductSpecification[] ProductSpecification { get; set; }
         public string DigitalSignatureReferences { get; set; }
         public string DigitalSignatureValue { get; set; }
+        public PTLocale DefaultLocale { get; set; }
+        public PTLocale OtherLocale { get; set; }
 
         /// <summary>
         ///     Returns true if the instance has no data
@@ -23,12 +25,12 @@ namespace S1xxExchangeset.Types.complextypes
         public override bool IsEmpty
         {
             get {
-                return String.IsNullOrEmpty(FileName) &&
-                    String.IsNullOrEmpty(FileLocation) &&
-                    String.IsNullOrEmpty(Scope) &&
-                    String.IsNullOrEmpty(VersionNumber) &&
-                    String.IsNullOrEmpty(IssueDate) &&
-                    (ProductSpecification == null || ProductSpecification.IsEmpty) &&
+                return (FileName == null || FileName.Length == 0) &&
+                    (FileLocation == null || FileLocation.Length == 0) &&
+                    (Scope == null || Scope.Length == 0) &&
+                    (VersionNumber == null || VersionNumber.Length == 0) &&
+                    (IssueDate == null || IssueDate.Length == 0) &&
+                    (ProductSpecification == null || ProductSpecification.Length == 0) &&
                     String.IsNullOrEmpty(DigitalSignatureValue) &&
                     String.IsNullOrEmpty(DigitalSignatureReferences);
             }
@@ -52,71 +54,124 @@ namespace S1xxExchangeset.Types.complextypes
         {
             writer.WriteStartElement(NamespacePrefix, "S100_CatalogueMetadata", Namespace);
 
-            //public string FileName { get; set; }
-            if (!String.IsNullOrEmpty(FileName))
+            foreach (string fileNameItem in FileName)
             {
                 writer.WriteStartElement(NamespacePrefix, "fileName", Namespace);
-                writer.WriteString(FileName);
+                if (String.IsNullOrEmpty(fileNameItem) == false)
+                {
+                    writer.WriteString(fileNameItem);
+                }
+                else
+                {
+                    writer.WriteAttributeString("gco", "nilReason", @"http://www.isotc211.org/2005/gco", "unknown");
+                }
                 writer.WriteEndElement();
             }
 
-            //public string FileLocation { get; set; }
-            if (!String.IsNullOrEmpty(FileLocation))
+            foreach (string fileLocationItem in FileLocation)
             {
                 writer.WriteStartElement(NamespacePrefix, "fileLocation", Namespace);
-                writer.WriteString(FileLocation);
+                if (String.IsNullOrEmpty(fileLocationItem) == false)
+                {
+                    writer.WriteString(fileLocationItem);
+                }
+                else
+                {
+                    writer.WriteAttributeString("gco", "nilReason", @"http://www.isotc211.org/2005/gco", "unknown");
+                }
                 writer.WriteEndElement();
             }
 
-            //public string Scope { get; set; }
-            if (!String.IsNullOrEmpty(Scope))
+            foreach (string scopeItem in Scope)
             {
                 writer.WriteStartElement(NamespacePrefix, "scope", Namespace);
-                writer.WriteString(Scope);
+                if (String.IsNullOrEmpty(scopeItem) == false)
+                {
+                    writer.WriteString(scopeItem);
+                }
+                else
+                {
+                    writer.WriteAttributeString("gco", "nilReason", @"http://www.isotc211.org/2005/gco", "unknown");
+                }
                 writer.WriteEndElement();
             }
 
-            //public string VersionNumber { get; set; }
-            if (!String.IsNullOrEmpty(VersionNumber))
+            foreach (string versionNumberItem in VersionNumber)
             {
                 writer.WriteStartElement(NamespacePrefix, "versionNumber", Namespace);
-                writer.WriteString(VersionNumber);
+                if (String.IsNullOrEmpty(versionNumberItem) == false)
+                {
+                    writer.WriteString(versionNumberItem);
+                }
+                else
+                {
+                    writer.WriteAttributeString("gco", "nilReason", @"http://www.isotc211.org/2005/gco", "unknown");
+                }
                 writer.WriteEndElement();
             }
 
-            //public string IssueDate { get; set; }
-            if (!String.IsNullOrEmpty(IssueDate))
+            foreach (string issueDateItem in IssueDate)
             {
                 writer.WriteStartElement(NamespacePrefix, "issueDate", Namespace);
-                writer.WriteString(IssueDate);
-
-                if (DateTime.TryParse(IssueDate, out DateTime issuedateValue))
+                if (String.IsNullOrEmpty(issueDateItem) == false)
                 {
-                    writer.WriteString(issuedateValue.ToString("yyyy-MM-dd"));
-                }
+                    writer.WriteString(issueDateItem);
 
+                    if (DateTime.TryParse(issueDateItem, out DateTime issuedateValue))
+                    {
+                        writer.WriteString(issuedateValue.ToString("yyyy-MM-dd"));
+                    }
+                }
+                else
+                {
+                    writer.WriteAttributeString("gco", "nilReason", @"http://www.isotc211.org/2005/gco", "unknown");
+                }
                 writer.WriteEndElement();
             }
 
-            //public IProductSpecification ProductSpecification { get; set; }
-            if (ProductSpecification != null && ProductSpecification.IsEmpty == false)
+            foreach (IProductSpecification productSpecificationItem in ProductSpecification)
             {
-                ProductSpecification.WriteXml(writer);
+                if (productSpecificationItem != null && productSpecificationItem.IsEmpty == false)
+                {
+                    productSpecificationItem.WriteXml(writer);
+                }
+                else
+                {
+                    writer.WriteStartElement(NamespacePrefix, "productSpecification", Namespace);
+                    writer.WriteAttributeString("gco", "nilReason", @"http://www.isotc211.org/2005/gco", "unknown");
+                    writer.WriteEndElement();
+                }
             }
 
-            //public string DigitalSignatureReferences { get; set; }
-            if (!String.IsNullOrEmpty(DigitalSignatureReferences))
+            if (String.IsNullOrEmpty(DigitalSignatureReferences) == false)
             {
                 writer.WriteStartElement(NamespacePrefix, "digitalSignatureReference", Namespace);
                 writer.WriteString(DigitalSignatureReferences);
                 writer.WriteEndElement();
             }
 
-            //public string DigitalSignatureValue { get; set; }
-            if (!String.IsNullOrEmpty(DigitalSignatureValue))
+            if (String.IsNullOrEmpty(DigitalSignatureValue) == false)
             {
                 writer.WriteStartElement(NamespacePrefix, "digitalSignatureValue", Namespace);
                 writer.WriteString(DigitalSignatureValue);
+                writer.WriteEndElement();
+            }
+
+            writer.WriteStartElement(NamespacePrefix, "defaultLocale", Namespace);
+            if (DefaultLocale != null)
+            {
+                DefaultLocale.WriteXml(writer);
+            }
+            else
+            {
+                writer.WriteAttributeString("gco", "nilReason", @"http://www.isotc211.org/2005/gco", "unknown");
+            }
+            writer.WriteEndElement();
+
+            if (OtherLocale != null)
+            {
+                writer.WriteStartElement(NamespacePrefix, "otherLocale", Namespace);
+                OtherLocale.WriteXml(writer);
                 writer.WriteEndElement();
             }
 

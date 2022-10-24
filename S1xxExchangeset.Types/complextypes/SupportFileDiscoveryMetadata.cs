@@ -55,7 +55,7 @@ namespace S1xxExchangeset.Types.complextypes
         /// <param name="writer">writer to write XML to</param>
         public override void WriteXml(XmlWriter writer)
         {
-            writer.WriteStartElement(NamespacePrefix, "datasetDiscoveryMetadata", Namespace);
+            writer.WriteStartElement(NamespacePrefix, "supportFileDiscoveryMetadata", Namespace);
 
             //public string FileName { get; set; }
             writer.WriteStartElement(NamespacePrefix, "fileName", Namespace);

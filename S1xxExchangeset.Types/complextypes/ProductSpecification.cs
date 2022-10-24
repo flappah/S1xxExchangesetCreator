@@ -10,6 +10,7 @@ namespace S1xxExchangeset.Types.complextypes
         public string Name { get; set; }
         public string Version { get; set; }
         public string Date { get; set; }
+        public string Number { get; set; }
 
         /// <summary>
         ///     Returns true if the instance has no data
@@ -20,7 +21,8 @@ namespace S1xxExchangeset.Types.complextypes
             {
                 return String.IsNullOrEmpty(Name) &&
                     String.IsNullOrEmpty(Version) &&
-                    String.IsNullOrEmpty(Date);
+                    String.IsNullOrEmpty(Date) && 
+                    String.IsNullOrEmpty(Number);
             }
         }
 
@@ -40,9 +42,8 @@ namespace S1xxExchangeset.Types.complextypes
         /// <param name="writer">writer to write XML to</param>
         public override void WriteXml(XmlWriter writer)
         {
-            writer.WriteStartElement(NamespacePrefix, "identifier", Namespace);
+            writer.WriteStartElement(NamespacePrefix, "productSpecification", Namespace);
 
-            //public string Name { get; set; }
             if (!String.IsNullOrEmpty(Name))
             {
                 writer.WriteStartElement(NamespacePrefix, "name", Namespace);
@@ -50,7 +51,6 @@ namespace S1xxExchangeset.Types.complextypes
                 writer.WriteEndElement();
             }
 
-            //public string Version { get; set; }
             if (!String.IsNullOrEmpty(Version))
             {
                 writer.WriteStartElement(NamespacePrefix, "version", Namespace);
@@ -58,7 +58,6 @@ namespace S1xxExchangeset.Types.complextypes
                 writer.WriteEndElement();
             }
 
-            //public string Date { get; set; }
             if (!String.IsNullOrEmpty(Date))
             {
                 writer.WriteStartElement(NamespacePrefix, "date", Namespace);
@@ -69,6 +68,13 @@ namespace S1xxExchangeset.Types.complextypes
                     writer.WriteString(dateValue.ToString("yyyy-MM-dd"));
                 }
 
+                writer.WriteEndElement();
+            }
+
+            if (String.IsNullOrEmpty(Number) == false)
+            {
+                writer.WriteStartElement(NamespacePrefix, "number", Namespace);
+                writer.WriteString(Number);
                 writer.WriteEndElement();
             }
 

@@ -43,11 +43,11 @@ namespace S1xxExchangeset.Types.complextypes
             writer.WriteStartElement(NamespacePrefix, "classification", Namespace);
             writer.WriteAttributeString("gco", "isoType", @"http://www.isotc211.org/2005/gco");
 
-            writer.WriteStartElement("gmd", "MD_ClassificationCode", "http://www.isotc211.org/2005/gmd");
+            writer.WriteStartElement("mco", "MD_ClassificationCode", "http://standards.iso.org/iso/19115/-3/mco/1.0");
             writer.WriteAttributeString("codeList", CodeList ?? @"http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_ClassificationCode");
             writer.WriteAttributeString("codeListValue", CodeListValue ?? "unclassified");
-
             writer.WriteEndElement();
+
             writer.WriteEndElement();
         }
     }

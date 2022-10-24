@@ -42,8 +42,8 @@ namespace S1xxExchangeset.Types.complextypes
 
             if (MDUsage != null && MDUsage.IsEmpty == false)
             {
-                MDUsage.NamespacePrefix = "gmd";
-                MDUsage.Namespace = @"http://www.isotc211.org/2005/gmd";
+                MDUsage.NamespacePrefix = "mri";
+                MDUsage.Namespace = "http://standards.iso.org/iso/19115/-3/mri/1.0d";
                 MDUsage.WriteXml(writer);
             }
 

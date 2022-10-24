@@ -26,9 +26,9 @@ namespace S1xxExchangeset.Types.complextypes
         public bool? ReplacedData { get; set; }
         public IProductSpecification ProductSpecification { get; set; }
         public string SourceMedia { get; set; }
-        public IDatasetDiscoveryMetadata DatasetDiscoveryMetadata { get; set; }
+        public IDatasetDiscoveryMetadata[] DatasetDiscoveryMetadata { get; set; }
         public ISupportFileDiscoveryMetadata[] SupportFileDiscoveryMetaData { get; set; }
-        public IS100_CatalogueMetadata S100_CatalogueMetaData { get; set; }
+        public IS100_CatalogueMetadata[]S100_CatalogueMetaData { get; set; }
 
         public override XmlSchema GetSchema()
         {
@@ -131,12 +131,12 @@ namespace S1xxExchangeset.Types.complextypes
                 writer.WriteEndElement();
             }
 
-            if (String.IsNullOrEmpty(AlgorithmMethod) == false)
-            {
-                writer.WriteStartElement(NamespacePrefix, "algorithmMethod", Namespace);
-                writer.WriteString(AlgorithmMethod);
-                writer.WriteEndElement();
-            }
+            //if (String.IsNullOrEmpty(AlgorithmMethod) == false)
+            //{
+            //    writer.WriteStartElement(NamespacePrefix, "algorithmMethod", Namespace);
+            //    writer.WriteString(AlgorithmMethod);
+            //    writer.WriteEndElement();
+            //}
 
             if (String.IsNullOrEmpty(SourceMedia) == false)
             {
@@ -159,28 +159,38 @@ namespace S1xxExchangeset.Types.complextypes
                 writer.WriteEndElement();
             }
 
-            if (DatasetDiscoveryMetadata != null)
+            if (DatasetDiscoveryMetadata != null && DatasetDiscoveryMetadata.Length > 0)
             {
-                DatasetDiscoveryMetadata.Namespace = Namespace;
-                DatasetDiscoveryMetadata.NamespacePrefix = NamespacePrefix;
-                DatasetDiscoveryMetadata.WriteXml(writer);
+                foreach (var datasetDiscoveryMetadataItem in DatasetDiscoveryMetadata)
+                {
+                    writer.WriteStartElement(NamespacePrefix, "datasetDiscoveryMetadata", Namespace);
+
+                    datasetDiscoveryMetadataItem.Namespace = Namespace;
+                    datasetDiscoveryMetadataItem.NamespacePrefix = NamespacePrefix;
+                    datasetDiscoveryMetadataItem.WriteXml(writer);
+
+                    writer.WriteEndElement();
+                }
             }
 
             if (SupportFileDiscoveryMetaData != null && SupportFileDiscoveryMetaData.Length > 0)
             {
-                foreach(ISupportFileDiscoveryMetadata supportFileMetaData in SupportFileDiscoveryMetaData)
+                foreach(ISupportFileDiscoveryMetadata supportFileMetaDataItem in SupportFileDiscoveryMetaData)
                 {
-                    supportFileMetaData.Namespace = Namespace;
-                    supportFileMetaData.NamespacePrefix = NamespacePrefix;
-                    supportFileMetaData.WriteXml(writer);
+                    supportFileMetaDataItem.Namespace = Namespace;
+                    supportFileMetaDataItem.NamespacePrefix = NamespacePrefix;
+                    supportFileMetaDataItem.WriteXml(writer);
                 }
             }
 
             if (S100_CatalogueMetaData != null)
             {
-                S100_CatalogueMetaData.Namespace = Namespace;
-                S100_CatalogueMetaData.NamespacePrefix = NamespacePrefix;
-                S100_CatalogueMetaData.WriteXml(writer);
+                foreach(IS100_CatalogueMetadata catalogueMetaDataItem in S100_CatalogueMetaData)
+                {
+                    catalogueMetaDataItem.Namespace = Namespace;
+                    catalogueMetaDataItem.NamespacePrefix = NamespacePrefix;
+                    catalogueMetaDataItem.WriteXml(writer);
+                }
             }
 
             writer.WriteEndElement();

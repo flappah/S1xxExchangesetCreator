@@ -3,6 +3,5 @@
     public interface IMDUsage : IComplexType
     {
         string SpecificUsage { get; set; }
-        string UserContactInfo { get; set; }
     }
 }

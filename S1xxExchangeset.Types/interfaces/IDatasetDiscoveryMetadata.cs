@@ -1,13 +1,12 @@
 ﻿namespace S1xxExchangeset.Types.interfaces
 {
-    public interface IDatasetDiscoveryMetadata : IComplexType
+    public interface IS100_DatasetDiscoveryMetadata : IComplexType
     {
         string FileName { get; set; }
         string FilePath { get; set; }
         string Description { get; set; }
         string DataProtection { get; set; }
         string ProtectionScheme { get; set; }
-        string DigitalSignature { get; set; }
         string DigitalSignatureReference { get; set; }
         string DigitalSignatureValue { get; set; }
         string Copyright { get; set; }
@@ -18,6 +17,7 @@
         string UpdateNumber { get; set; }
         string UpdateApplicationDate { get; set; }
         string IssueDate { get; set; }
+        string IssueTime { get; set; }
         IProductSpecification ProductSpecification { get; set; }
         IProducingAgency ProducingAgency { get; set; }
         string OptimumDisplayScale { get; set; }

@@ -15,5 +15,9 @@
         IProductSpecification ProductSpecification { get; set; }
         string SourceMedia { get; set; }
 
+        IDatasetDiscoveryMetadata[] DatasetDiscoveryMetadata { get; set; }
+        ISupportFileDiscoveryMetadata[] SupportFileDiscoveryMetaData { get; set; }
+        IS100_CatalogueMetadata[] S100_CatalogueMetaData { get; set; }
+
     }
 }

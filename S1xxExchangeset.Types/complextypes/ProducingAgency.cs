@@ -7,9 +7,7 @@ namespace S1xxExchangeset.Types.complextypes
 {
     public class ProducingAgency : ComplexTypeBase, IProducingAgency
     {
-        public string OrganisationName { get; set; }
-        public IContactInfo ContactInfo { get; set; }
-        public IRole[] Roles { get; set; }
+        public ICIResponsibility Responsibility { get; set; }
 
         /// <summary>
         ///     Returns true if the instance has no data
@@ -18,8 +16,7 @@ namespace S1xxExchangeset.Types.complextypes
         {
             get
             {
-                return String.IsNullOrEmpty(OrganisationName) &&
-                    (ContactInfo == null || ContactInfo.IsEmpty);
+                return (Responsibility == null || Responsibility.IsEmpty);
             }
         }
 
@@ -40,33 +37,18 @@ namespace S1xxExchangeset.Types.complextypes
         public override void WriteXml(XmlWriter writer)
         {
             writer.WriteStartElement(NamespacePrefix, "producingAgency", Namespace);
-            writer.WriteAttributeString("gco", "isoType", "http://www.isotc211.org/2005/gco", "gmd:CI_ResponsibleParty");
 
-            if (!String.IsNullOrEmpty(OrganisationName))
+            if (Responsibility != null && Responsibility.IsEmpty == false)
             {
-                writer.WriteStartElement("gmd", "organisationName", "http://www.isotc211.org/2005/gmd");
-                writer.WriteStartElement("gco", "CharacterString", "http://www.isotc211.org/2005/gco");
-                writer.WriteString(OrganisationName);
-                writer.WriteEndElement();
-                writer.WriteEndElement();
+                Responsibility.Namespace = "http://standards.iso.org/iso/19115/-3/cit/2.0";
+                Responsibility.NamespacePrefix = "cit";
+                Responsibility.WriteXml(writer);
             }
-
-            if (ContactInfo != null && ContactInfo.IsEmpty == false)
+            else
             {
-                ContactInfo.NamespacePrefix = "gmd";
-                ContactInfo.Namespace = "http://www.isotc211.org/2005/gmd";
-                ContactInfo.WriteXml(writer);
-            }
-
-            if (Roles != null && Roles.Length > 0)
-            {
-                foreach (var role in Roles)
-                {
-                    if (role.IsEmpty == false)
-                    {
-                        role.WriteXml(writer);
-                    }
-                }
+                writer.WriteStartElement("cit", "CI_Responsiblity", Namespace);
+                writer.WriteAttributeString("xsi", "nil", "http://standards.iso.org/iso/19115/-3/cit/2.0", "true");
+                writer.WriteEndElement();
             }
 
             writer.WriteEndElement();

@@ -1,16 +1,14 @@
 ﻿using S1xxExchangeset.Types.interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 
 namespace S1xxExchangeset.Types.complextypes
 {
+    [Serializable]
     public class MDUsage : ComplexTypeBase, IMDUsage
     {
         public string SpecificUsage { get; set; }
-        public string UserContactInfo { get; set; }
 
         /// <summary>
         ///     Returns true if the instance has no data
@@ -19,7 +17,7 @@ namespace S1xxExchangeset.Types.complextypes
         {
             get
             {
-                return String.IsNullOrEmpty(SpecificUsage) && String.IsNullOrEmpty(UserContactInfo);
+                return String.IsNullOrEmpty(SpecificUsage);
             }
         }
 
@@ -41,8 +39,7 @@ namespace S1xxExchangeset.Types.complextypes
         {
             writer.WriteStartElement(NamespacePrefix, "MD_Usage", Namespace);
 
-            //public string SpecificUsage { get; set; }
-            if (!String.IsNullOrEmpty(SpecificUsage))
+            if (String.IsNullOrEmpty(SpecificUsage) == false)
             {
                 writer.WriteStartElement(NamespacePrefix, "specificUsage", Namespace);
                 writer.WriteStartElement("gco", "characterString", @"http://www.isotc211.org/2005/gco");
@@ -50,19 +47,6 @@ namespace S1xxExchangeset.Types.complextypes
                 writer.WriteEndElement();
                 writer.WriteEndElement();
             }
-
-            //public string UserContactInfo { get; set; }
-            writer.WriteStartElement(NamespacePrefix, "userContactInfo", Namespace);
-            if (String.IsNullOrEmpty(UserContactInfo))
-            {
-                writer.WriteAttributeString("gco", "nilReason", @"http://www.isotc211.org/2005/gco", "unknown");
-            }
-            else
-            {
-                writer.WriteString(UserContactInfo);
-            }
-
-            writer.WriteEndElement();
 
             writer.WriteEndElement();
         }

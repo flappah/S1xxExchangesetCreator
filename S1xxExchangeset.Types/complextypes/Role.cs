@@ -37,8 +37,8 @@ namespace S1xxExchangeset.Types.complextypes
         /// <param name="writer">writer to write XML to</param>
         public override void WriteXml(XmlWriter writer)
         {
-            writer.WriteStartElement("gmd", "role", "http://www.isotc211.org/2005/gmd");
-            writer.WriteStartElement("gmd", "CI_RoleCode", "http://www.isotc211.org/2005/gmd");
+            writer.WriteStartElement(NamespacePrefix, "role", Namespace);
+            writer.WriteStartElement(NamespacePrefix, "CI_RoleCode", Namespace);
             writer.WriteAttributeString("", "codeList", CodeList ?? @"http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode");
             writer.WriteAttributeString("", "codeListValue", CodeValue ?? @"owner");
 
